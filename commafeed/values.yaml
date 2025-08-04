@@ -1,0 +1,7 @@
+service:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8083
+      protocol: TCP
+      targetPort: 8082

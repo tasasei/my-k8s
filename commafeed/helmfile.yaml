@@ -1,0 +1,10 @@
+repositories:
+  - name: mt190502
+    url: https://helm.mtaha.dev
+releases:
+- name: my-commafeed
+  namespace: default
+  chart: mt190502/commafeed
+  version: 5.0.1
+  values:
+    - values.yaml

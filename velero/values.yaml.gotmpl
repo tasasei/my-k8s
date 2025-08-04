@@ -1,0 +1,50 @@
+configuration:
+  backupStorageLocation:
+  - bucket: velero-backup
+    name: default
+    provider: aws
+    config:
+      region: auto
+      s3Url: {{ requiredEnv "VELERO_S3_URL" }}
+      signatureVersion: "v4"
+  volumeSnapshotLocation:
+  - name: default
+    provider: aws
+    config:
+      region: auto
+      s3Url: {{ requiredEnv "VELERO_S3_URL" }}
+  defaultVolumesToFsBackup: true
+  features: EnableCSI
+  # `velero server` default: 1m
+  backupSyncPeriod: 30m
+initContainers:
+- name: velero-plugin-for-aws
+  image: velero/velero-plugin-for-aws:v1.12.0
+  imagePullPolicy: IfNotPresent
+  volumeMounts:
+  - mountPath: /target
+    name: plugins
+# Whether to deploy the node-agent daemonset.
+deployNodeAgent: true
+# Backup schedules to create.
+schedules:
+  mybackup:
+    disabled: false
+    labels:
+      myenv: foo
+    annotations:
+      myenv: foo
+    schedule: "35 17 * * *"
+    useOwnerReferencesInBackup: false
+    paused: false
+#     skipImmediately: false
+    template:
+      ttl: "720h"
+#       storageLocation: default
+#       includedNamespaces:
+#       - foo
+#       # See: https://velero.io/docs/v1.14/resource-filtering/#excludes
+#       excludedNamespaceScopedResources:
+#       - persistentVolumeClaims
+#       excludedClusterScopedResources:
+#       - persistentVolumes

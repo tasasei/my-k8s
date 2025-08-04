@@ -1,0 +1,28 @@
+## @param redminePassword Redmine user password
+## Defaults to a random 10-character alphanumeric string if not set
+##
+redminePassword: {{ requiredEnv "REDMINE_PASSWORD" }}
+# redminePassword: {{ exec "kubectl" (list "get" "secret" "--namespace" "default" "my-redmine" "-o" "jsonpath='{.data.redmine-password}'") | b64dec }}
+# existingSecret: "my-redmine"
+
+## @param databaseType Redmine database type. Allowed values: `mariadb` and `postgresql`
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/redmine/#environment-variables
+##
+databaseType: mariadb
+## MariaDB chart configuration
+## ref: https://github.com/bitnami/charts/blob/main/bitnami/mariadb/values.yaml
+## @param mariadb.enabled Switch to enable or disable the MariaDB helm chart
+## @param mariadb.auth.rootPassword MariaDB root password
+## @param mariadb.auth.username MariaDB username
+## @param mariadb.auth.password MariaDB password
+## @param mariadb.auth.existingSecret Name of existing secret to use for MariaDB credentials
+## @param mariadb.architecture MariaDB architecture. Allowed values: `standalone` or `replication`
+##
+mariadb:
+  enabled: true
+  auth:
+    rootPassword: {{ requiredEnv "REDMINE_MARIADB_ROOT_PASSWORD" }}
+    username: bn_redmine
+    password: {{ requiredEnv "REDMINE_MARIADB_PASSWORD" }}
+    #existingSecret: "my-redmine"
+  architecture: standalone

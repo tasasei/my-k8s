@@ -1,0 +1,13 @@
+repositories:
+  - name: vmware-tanzu
+    url: https://vmware-tanzu.github.io/helm-charts/
+releases:
+- name: velero
+  namespace: default
+  chart: vmware-tanzu/velero
+  version: 10.0.8
+  values:
+    - ./values.yaml.gotmpl
+  set:
+    - name: credentials.secretContents.cloud
+      file: ./cr.txt
