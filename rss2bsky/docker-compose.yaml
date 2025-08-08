@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  web:
+    image: tasasei/rss2bsky:arm64
+    volumes:
+      - ./etc:/app/etc
+      - ./cache:/app/cache
