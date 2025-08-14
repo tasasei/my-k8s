@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    image: tasasei/rss2bsky:arm-27acf516
+    image: tasasei/rss2bsky:d9c162
     volumes:
       - ./etc:/app/etc
       - ./cache:/app/cache
