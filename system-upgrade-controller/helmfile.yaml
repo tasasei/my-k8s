@@ -1,0 +1,10 @@
+repositories:
+  - name: system-upgrade-controller
+    url: https://kube-the-home.github.io/system-upgrade-controller-helm
+releases:
+- name: my-system-upgrade-controller
+  namespace: default
+  chart: system-upgrade-controller/system-upgrade-controller
+  version: 1.4.0
+  # values:
+  #   - ./values.yaml
