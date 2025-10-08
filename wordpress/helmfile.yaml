@@ -1,0 +1,11 @@
+repositories:
+  - name: my-wordpress
+    url: https://charts.bitnami.com/bitnami
+releases:
+- name: my-wordpress
+  namespace: default
+  chart: bitnami/wordpress
+  version: 27.0.7
+  values:
+    - ./values.yaml
+    - ./wordpresspass.yaml.gotmpl
